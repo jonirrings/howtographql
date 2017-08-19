@@ -1,18 +1,18 @@
 ---
-title: More GraphQL Concepts
-pageTitle" "Advanced GraphQL Language Concepts Tutorial"
-description: "Learn about advanced concepts of the GraphQL language like fragments, query arguments, aliases, interfaces and more SDL features" 
-question: Which of these statements is false?
-answers: ["Aliases can be used to name the result objects for multiple queries", "Fragments are useful for the structure and reusability of your GraphQL code", "Every field in a GraphQL type can be associated with zero or more arguments", "GraphQL has a built-in Date type"]
+title: 更多 GraphQL 概念
+pageTitle" "高级 GraphQL 语言概念教程"
+description: "学习 GraphQL 语言的高级概念，譬如片段、查询参数、别名、接口以及其他 SDL 特性" 
+question: 下列那句话是错的？
+answers: ["别名可在多个查询中为结果对象命名", "片段有助于你 GraphQL 代码的结构和重用", "GraphQL 类型中的每个字段都能关联零个或多个参数", "GraphQL 具有内置 Date 类型"]
 correctAnswer: 3
 ---
 
 
-### Enhancing Reusability with Fragments
+### 使用片段增强重用性
 
-_Fragments_ are a handy feature to help improving the structure and reusability of your GraphQL code. A fragment is a collection of fields on a specific type.
+**片段**在提升 GraphQL 代码重用性上是一件称手的工具。片段是特定类型上的字段集合：
 
-Let's assume we have the following type:
+假设我们有以下类型：
 
 ```graphql(nocopy)
 type User {
@@ -25,7 +25,7 @@ type User {
 }
 ```
 
-Here, we could represent all the information that relates to the user's physical address into a fragment:
+接着我们把表示一个用户物理地址的信息放进一个片段中：
 
 ```graphql(nocopy)
 fragment addressDetails on User {
@@ -36,7 +36,7 @@ fragment addressDetails on User {
 }
 ```
 
-Now, when writing a query to access the address information of a user, we can use the following syntax to refer to the fragment and save the work to actually spell out the four fields:
+然后，当编写请求用户地址信息的查询时，我们就能使用下面的句式来引用这个片段，而不必把每个片段都拼写出来：
 
 ```graphql(nocopy)
 {
@@ -46,7 +46,7 @@ Now, when writing a query to access the address information of a user, we can us
 }
 ```
 
-This query is equivalent to writing:
+这个查询等价于这个写法：
 
 ```graphql(nocopy)
 {
@@ -59,11 +59,11 @@ This query is equivalent to writing:
 }
 ```
 
-### Parameterizing Fields with Arguments
+### 字段与参数
 
-In GraphQL type definitions, each field can take zero or more _arguments_. Similar to arguments that are passed into functions in typed programming languages, each argument needs to have a _name_ and a _type_. In GraphQL, it's also possible to specify _default values_ for arguments.
+在 GraphQL 类型定义中，每个字段都能有零个或者多个**参数**。跟有类型语言中传给函数的参数一样，每个参数都需要**名字**和**类型**。GraphQL 中也能指定参数**默认值**。
 
-As an example, let's consider a part of the schema that we saw in the beginning:
+拿我们前文中看到的 schema 的一部分举例：
 
 ```graphql(nocopy)
 type Query {
@@ -76,7 +76,7 @@ type User {
 }
 ```
 
-We could now add an argument to the `allUsers` field that allows us to pass an argument to filter users and include only those above a certain age. We also specify a default value so that by default all users will be returned:
+我们给 `allUsers` 字段添加一个参数，用于传递过滤用户的参数，从而只保留特定年龄以上的用户。我们也给这个参数设置默认值，这样默认情况下返回所有用户：
 
 ```graphql(nocopy)
 type Query {
@@ -84,7 +84,7 @@ type Query {
 }
 ```
 
-This `olderThan` argument can now be passed into the query using the following syntax:
+通过下面的句式向查询传入 `olderThan` 参数：
 
 ```graphql(nocopy)
 {
@@ -95,9 +95,9 @@ This `olderThan` argument can now be passed into the query using the following s
 }
 ```
 
-### Named Query Results with Aliases
+### 使用别名为查询结果命名
 
-One of GraphQL's major strengths is that it lets you send multiple queries in a single request. However, since the response data is shaped after the structure of the fields being requested, you might run into naming issues when you're sending multiple queries asking for the same fields:
+GraphQL 的一大主要优势是可以一次请求中发送多个查询。然而，由于响应数据是根据请求的字段结构来构建的，所以当发送多个查询请求相同字段的时候，你可能会面临命名问题：
 
 ```graphql(nocopy)
 {
@@ -110,7 +110,7 @@ One of GraphQL's major strengths is that it lets you send multiple queries in a 
 }
 ```
 
-In fact, this will produce an error with a GraphQL server, since it's the same field but different arguments. The only way to send a query like that would be to use aliases, i.e. specifying names for the query results:
+事实上这个查询会使 GraphQL 服务器报错，因为使用不同参数查询了相同字段。唯一可以发送类似查询的方式就是使用别名，亦即，给查询结果指定名字：
 
 ```graphql(nocopy)
 {
@@ -123,7 +123,7 @@ In fact, this will produce an error with a GraphQL server, since it's the same f
 }
 ```
 
-In the result, the server would now name each `User` object according to the specified alias:
+在结果中，服务器会给各个 `User` 对象赋予指定的别名：
 
 ```graphql(nocopy)
 {
@@ -136,22 +136,22 @@ In the result, the server would now name each `User` object according to the spe
 }
 ```
 
-### Advanced SDL
+### 高级 SDL
 
-The SDL offers a couple of language features that weren't discussed in the previous chapter. In the following, we'll discuss those by practical examples.
+SDL 将提供两个之前章节尚未讨论的语言特性。下文中我们将以实际案例为例来讨论这些特性。
 
-#### Object & Scalar Types
+#### 对象 & 标量类型
 
-In GraphQL, there are two different kinds of types.
+在 GraphQL 中，有两种类型：
 
-- _Scalar_ types represent concrete units of data. The GraphQL spec has five predefined scalars: as `String`, `Int`, `Float`, `Boolean`, and `ID`. 
-- _Object_ types have _fields_ that express the properties of that type and are composable. Examples for object types are the `User` or `Post` types we saw in the previous section.
+- **标量**类型表示具体数据。GraphQL 规范有五个预定义的标量：`String`、`Int`、`Float`、`Boolean` 和 `ID`。
+- **对象**类型拥有**字段**用来表示这个类型的属性和可组装性。上文中的 `User` 和 `Post` 即是典型的对象类型案例。
 
-In every GraphQL schema, you can define your own scalar and object types. An often cited example for a custom scalar would be a `Date` type where the implementation needs to define how that type validated, serialized, and deserialized.
+在 GraphQL schema 中，你可以定义自己的标量和对象类型。一个经常被说起的自定义标量类型是 `Date` 类型，自定义标量类型需要定义类型验证、序列化和反序列化。
 
-#### Enums
+#### 枚举型
 
-GraphQL allows you to define _enumerations_ types (short _enums_), a language feature to express the semantics of a type that has a fixed set of values. We could thus define a type called `Weekday` to represent all the days of a week:
+GraphQL 可以定义**枚举**类型，一种语言特性，表示一个类型可能是一个固定集合的中的值。我们可以像下面这样定义一个枚举类型 `Weekday`，表示一周的每一天：
 
 ```graphql(nocopy)
 enum Weekday {
@@ -165,11 +165,11 @@ enum Weekday {
 }
 ```
 
-Note that technically enums are special kinds of scalar types.
+需要注意的是，枚举型在技术上而言是一种特殊的标量类型。
 
-#### Interface
+#### 接口
 
-An _interface_ can be used to describe a type in an abstract way. It allows you to specify a set of fields that any concrete type, which _implements_ this interface, needs to have. In many GraphQL schemas, every type is required to have an `id` field. Using interfaces, this requirement can be expressed by defining an interface with this field and then making sure that all custom types implement it:
+**接口**可以抽象地描述一种类型。它要求你指定一系列的字段，用于具体类型去**实现**这个接口。在很多 GraphQL schema 中，每个类型都要求有一个 `id`。如果使用接口，这个需求可以如下示例来确定所有的自定义类型都实现了它：
 
 ```graphql(nocopy)
 interface Node {
@@ -183,9 +183,9 @@ type User implements Node {
 }
 ```
 
-#### Union Types
+#### 联合类型
 
-_Union types_ can be used to express that a type should be _either_ of a collection of other types. They are best understood by means of an example. Let's consider the following types:
+**联合类型**用于表示一个类型将会是一个类型集合的中**某一个**。通过示例最好理解，我们考虑如下类型：
 
 ```graphql(nocopy)
 type Adult {
@@ -199,15 +199,15 @@ type Child {
 }
 ```  
 
-Now, we could define a `Person` type to be the _union_ of `Adult` and `Child`:
+然后我们定义一个 `Person` 类型，为 `Adult` 和 `Child` 的联合：
 
 ```graphql(nocopy)
 union Person = Adult | Child
 ```
 
-This brings up a different problem: In a GraphQL query where we ask to retrieve information about a `Child` but only have a `Person` type to work with, how do we know whether we can actually access this field?
+这带来一个不同的问题：GraphQL 查询请求的是 `Child` 但是我们只有一个 `Person` 的字段可用，我们该如何获取该字段呢？
 
-The answer to this is called _conditional fragments_:
+其答案是**条件片段**：
 
 ```graphql(nocopy)
 {
