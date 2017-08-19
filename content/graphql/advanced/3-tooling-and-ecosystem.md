@@ -1,21 +1,21 @@
 ---
-title: Tooling and Ecosystem
-pageTitle: "GraphQL Tooling & Ecosystem Tutorial"
-description: "Learn about the GraphQL ecosystem and its awesome tooling like the GraphiQL playgrounds or self-generating docs through introspection."  
-question: What mechanism is used by most tools to discover a GraphQL server's type system?
-answers: ["The IDL", "Introspection", "GraphiQL", "Subscriptions"]
+title: 工具和生态
+pageTitle: "GraphQL 工具 & 生态教程"
+description: "学习 GraphQL 生态和其炫酷的工具，例如 GraphiQL playgrounds 或者通过内省自我生成文档。"  
+question: 大多数工具利用了什么机制来检查服务端类型系统？
+answers: ["IDL", "内省", "GraphiQL", "订阅"]
 correctAnswer: 1
 ---
 
-As you probably realized already, the GraphQL ecosystem is growing at an amazing speed right now. One of the reasons that this is happening is because GraphQL makes it really easy for us to develop great tools. In this section, we will see why this is the case, and a few amazing tools we already have in the ecosystem.
+如你所知，GraphQL 生态目前正在以惊人之速成长。其原因之一就是 GraphQL 使得工具开发十分便利。本章节中，我们将看看为何是这样，以及一些生态中已经有的优秀工具。
 
-If you are familiar with GraphQL basics, you probably know how GraphQL's Type System allows us to quickly define the surface area of our APIs. It allows developers to clearly define the capabilities of an API, but also to validate incoming queries against a schema.
+如果你熟悉 GraphQL 基础，你很可能知道如何通过 GraphQL 类型系统快速定义我们的 API 表现。它使得开发者能够明确地定义 API 能力，并且根据 schema 验证所有查询。
 
-An amazing thing with GraphQL is that these capabilities are not only known to the server. GraphQL allows clients to ask a server for information about its schema. GraphQL calls this **introspection**.
+GraphQL 的一个惊人之处就在于，它的类型系统能力不仅仅可以为服务端所知，还能传达给客户端，只要客户端请求 schema 的信息。GraphQL 称这个能力为**内省**。
 
-## Introspection
+## 内省
 
-The designers of the schema already know what the schema looks like but how can clients discover what is accessible through a GraphQL API ? We can ask GraphQL for this information by querying the `__schema` meta-field, which is always available on the root type of a Query per the spec.
+schema 设计者是已经知道 schema 长什么样了，但是客户端该如何知道那些内容可以通过 GraphQL API 查到呢？我们可以通过查询 `__schema` 元字段向 GraphQL 请求这些信息，根据规范，这个字段在每个Query的根类型上可用。
 
 ```graphql
 query {
@@ -27,7 +27,7 @@ query {
 }
 ```
 
-Take this schema definition for example:
+拿这个 schema 定义为例：
 
 ```graphql
 type Query {
@@ -43,7 +43,7 @@ type Post {
 }
 ```
 
-If we were to send the introspection query mentioned above, we would get the following result:
+如果我们发送上述的内省查询，将得到如下结果：
 
 ```json
 {
@@ -95,9 +95,9 @@ If we were to send the introspection query mentioned above, we would get the fol
 }
 ```
 
-As you can see, we queried for all types on the schema. We get both the object types we defined and scalar types. We can even introspect the introspection types!
+如你所见，我们查询了 schema 上的所有类型。我们得到了标量类型和自定义的对象类型。我们甚至能通过内省得到内省类型。
 
-There's much more than name available on introspection types. Here's another example:
+内省类型上不只是有 name 而已，如另一个示例：
 
 ```graphql
 {
@@ -108,27 +108,27 @@ There's much more than name available on introspection types. Here's another exa
 }
 ```
 
-In this example, we query a single type using the `__type` meta-field and we ask for its name and description. Here's the result for this query:
+这个示例中，我们使用 `__type` 元字段查询了一个类型，我们请求了它的 name 和 description。下面是这个查询的结果：
 
 ```json
 {
   "data": {
     "__type": {
       "name": "Author",
-      "description": "The author of a post.",
+      "description": "The author of a post."
     }
   }
 }
 ```
 
-As you can see, introspection is an extremely powerful feature of GraphQL, and we've only scratched the surface. The specification goes into much more detail about what fields and types are available in the introspection schema.
+如你所见，内省是 GraphQL 的一个超级强大的特性，而我们也只是说了些皮毛罢了。规范中描述了更多的细节，指明了在内省 schema 上可用的字段和类型。
 
-A lot of tools available in the GraphQL ecosystem use the introspection system to provide amazing features. Think of documentation browsers, autocomplete, code generation, everything is possible! One of the most useful tools you will need as you build and use GraphQL APIs uses introspection heavily. It is called **GraphiQL**.
+GraphQL 生态中的大部分工具都利用了内省系统来提供炫酷的特性。想想文档浏览器、自动完成、代码生成这些都成为了可能！一个你经常配合 GraphQL API 使用的工具就重度使用了内省系统，它就是 **GraphiQL**。
 
 ## GraphiQL
 
-GraphiQL is an in-browser IDE for writing, validating, and testing GraphQL queries. It features an editor for GraphQL queries, equipped with autocompletion and validation as well as a documentation explorer to quickly visualize the structure of a schema (Powered by introspection).
+GraphiQL 是一个浏览器内 IDE，用于编写、验证和测试 GraphQL 查询。它定位为 GraphQL 查询编辑器，具有自动完成和验证功能，同时还是文档阅览器，可以将 schema 结构快速可视化。
 
-It is an incredibly powerful tool for development. It allows you to debug and try queries on a GraphQL server without having to write plain GraphQL queries over curl for example.
+它是一个用于开发的强大工具。它让你可以调试、测试查询 GraphQL 服务器，而不用手写原生 GraphQL 查询用于 curl 这种情况。
 
-Give it a try! http://graphql.org/swapi-graphql/
+不妨一试！ http://graphql.org/swapi-graphql/
