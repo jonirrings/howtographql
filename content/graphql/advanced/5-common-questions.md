@@ -1,46 +1,46 @@
 ---
-title: Common Questions
-pageTitle: "Common GraphQL Questions"
-description: "Answer common GraphQL questions about server-side caching, authentication, authorization, error handling, offline usage and more."
-question: How does a GraphQL server deal with failures?
-answers: ["A GraphQL server never fails", "It uses HTTP status codes to indicate what went wrong", "It returns a dedicated errors object in the server response", "It starts crying and hides under the bed"]
+title: 常见问题
+pageTitle: "常见 GraphQL 问题"
+description: "常见 GraphQL 问题，如服务端缓存、授权、认证、错误处理、离线使用等的回答。"
+question: GraphQL 服务器如何处理失败？
+answers: ["GraphQL 服务器从不失败", "它使用 HTTP 状态码来表示出错的事项", "它会在服务端响应中返回一个详细的错误对象", "它会躲在床下哭泣"]
 correctAnswer: 2
 ---
 
 
-### Is GraphQL a Database Technology?
+### GraphQL 是一种数据库技术吗？
 
-No. GraphQL is often confused with being a database technology. This is a misconception, GraphQL is a _query language_ for APIs - not databases. In that sense it's database agnostic and can be used with any kind of database or even no database at all.
+不，GraphQL 经常被误解成一种数据库技术，但是它事实上是一种用于 API 而不是数据库的**查询语言**。也就是说，它是数据库无差别的，可以配合任何一种数据库使用，甚至也可以无数据库。
 
-### Is GraphQL only for React / Javascript Developers?
+### GraphQL 只是面向 React / Javascript 开发者的吗？
 
-No. GraphQL is an API technology so it can be used in any context where an API is required. 
+不，GraphQL 是一种 API 技术，只要用到了 API 的场景，它就能用。
 
-On the _backend_, a GraphQL server can be implemented in any programming language that can be used to build a web server. Next to Javascript, there are popular reference implementations for Ruby, Python, Scala, Java, Clojure, Go and .NET.
+在**后端**，GraphQL 服务器可以用任何开发 Web 服务器的编程语言实现。除了 Javascript，还有使用 Ruby、Python、Scala、Java、Clojure、Go 和 .Net 实现的版本。
 
-Since a GraphQL API is usually operated over HTTP, any client that can speak HTTP is able to query data from a GraphQL server. 
+因为 GraphQL API 通常通过 HTTP 操作，所以任何使用 HTTP 的客户端都能从 GraphQL 服务器查询数据。
 
-> Note: GraphQL is actually transport layer agnostic, so you could choose other protocols than HTTP to implement your server.
+> 注意：GraphQL 其实是传输层无差别的，所以你也可以选择 HTTP 之外的其他协议来实现你的服务器。
 
-### How to do Server-side Caching?
+### 服务端缓存怎么做？
 
-One common concern with GraphQL, especially when comparing it to REST, are the difficulties to maintain server-side cache. With REST, it's easy to cache the data for each endpoint, since it's sure that the _structure_ of the data will not change.
+针对 GraphQL 的一个常见考量是保持服务端缓存的难度，特别是相比较 REST 而言的时候。使用 REST 的时候，为每个入口端点保持缓存十分容易，因为毫无疑问它们数据的**结构**不会变化。
 
-With GraphQL on the other hand, it's not clear what a client will request next, so putting a caching layer right behind the API doesn't make a lot of sense. 
+但是对于 GraphQL，就是另一个中情景，你根本不知道客户端下一次会请求什么数据，所以在 API 后面放一个缓存层意义不大。
 
-Server-side caching still is a challenge with GraphQL. More info about caching can be found on the [GraphQL website](http://graphql.org/learn/caching/). 
+GraphQL 服务端缓存依然是个挑战，关于缓存的更多信息可以在 [GraphQL网站](http://graphql.org/learn/caching/) 查看，另附 [中文页](http://graphql.cn/learn/caching/)。
 
-### How to do Authentication and Authorization?
+### 如何做认证和授权？
 
-Authentication and authorization are often confused. _Authentication_ describes the process of claiming an _identity_. That's what you do when you log in to a service with a username and password, you authenticate yourself. _Authorization_ on the other hand describes _permission rules_ that specify the access rights of individual users and user groups to certain parts of the system.
+认证和授权通常被混淆。**认证**通常指声明**身份**的过程。例如你登录一个服务的时候，你会输入你的用户名和密码，然后就成功的认证了你自己。而另一面，**授权**则描述了**权限规则**，亦即指明某个用户或者用户组是否可以接入系统中的某部分。
 
-Authentication in GraphQL can be implemented with common patterns such as [OAuth](https://oauth.net/).
+GraphQL 中的认证可以使用常规的模式实现，譬如 [OAuth](https://oauth.net/)。
 
-To implement authorization, it is [recommended](http://graphql.org/learn/authorization/) to delegate any data access logic to the business logic layer and not handle it directly in the GraphQL implementation. If you want to have some inspiration on how to implement authorization, you can take a look [Graphcool's permission queries](https://www.graph.cool/blog/2017-04-25-graphql-permission-queries-oolooch8oh/).
+如果要实现授权，[建议](http://graphql.org/learn/authorization/) 委托数据接入逻辑给业务逻辑层，而不是直接由 GraphQL 处理。如果你想获取一些实现授权逻辑的灵感，你可以看看  [Graphcool's permission queries](https://www.graph.cool/blog/2017-04-25-graphql-permission-queries-oolooch8oh/)。
 
-### How to do Error Handling?
+### 如何做错误处理？
 
-A successful GraphQL query is supposed to return a JSON object with a root field called `"data"`. If the request fails or partially fails (e.g. because the user requesting the data doesn't have the right access permissions), a second root field called `"errors"` is added to the response:
+一个成功的 GraphQL 查询被认为会返回一个 JSON 对象，其有一个 `"data"` 根字段。如果请求失败或者部分失败（譬如用户并没有请求数据的部分权限），那么响应中就会出现第二个根字段 `"errors"`：
 
 ```js(nocopy)
 {
@@ -49,12 +49,12 @@ A successful GraphQL query is supposed to return a JSON object with a root field
 }
 ```
 
-For more details, you can refer to the [GraphQL specification](http://facebook.github.io/graphql/#sec-Errors). 
+关于更多细节，你可以查看 [GraphQL 规范](http://facebook.github.io/graphql/#sec-Errors)。
 
-### Does GraphQL Support Offline Usage?
+### GraphQL 支持离线数据吗？
 
-GraphQL is a query language for (web) APIs, and in that sense by definition only works online. However, offline support on the client-side is a valid concern. The caching abilities of Relay and Apollo might already be enough for some use cases, but there isn't a popular solution for actually persisting stored data yet. You can gain some more insights in the GitHub issues of [Relay](https://github.com/facebook/relay/issues/676) and [Apollo](https://github.com/apollographql/apollo-client/issues/424) where offline support is discussed. 
+GraphQL 是一个 API 查询语言，也就是说从定义上来看只能在线使用。然而客户端的离线支持也是一个可行的考量。Relay 和 Apollo 的缓存机制已经足够用于某些离线场合，但是目前并没有一个持久化数据的通行解决方案。你可以从 GitHub 的 issue 页面  [Relay](https://github.com/facebook/relay/issues/676) 和  [Apollo](https://github.com/apollographql/apollo-client/issues/424) 获得关于离线支持更深入的探讨。
 
-> One interesting approach for offline usage and persistence can be found [here](http://www.east5th.co/blog/2017/07/24/offline-graphql-queries-with-redux-offline-and-apollo/).
+> 另外 [这](http://www.east5th.co/blog/2017/07/24/offline-graphql-queries-with-redux-offline-and-apollo/) 还有一个有趣的离线使用和持久化方法。
 
 
