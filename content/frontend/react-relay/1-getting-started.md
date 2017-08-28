@@ -1,8 +1,8 @@
 ---
-title: Getting Started
-pageTitle: "Getting Started with GraphQL, React & Relay Tutorial"
-description: Start building a Hackernews clone. Create the frontend with create-react-app and the backend with Graphcool.
-question: Which are the two types that you find in every Graphcool project file?
+title: 开始
+pageTitle: "开始 GraphQL、 React 和 Relay 的教程吧"
+description: 开始构建一个 Hackernews 克隆。使用 create-react-app 创建前端，使用 Graphcool 创建后端。
+question: 每个 Graphcool 项目的文件中你必然会找到哪两个类型？
 answers: ["File & User", "File & System", "Query & Mutation", "User & Group"]
 correctAnswer: 0
 videoId: I6I2Y-t7tGI
